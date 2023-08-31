@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(../assets/fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(../assets/fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Roboto';
+    --body-text-color: rgb(31, 35, 57);
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: center;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+.wrapper {
+    display: flex;
+}
+
+.sign-up {
+    float: left;
+    width: 50%;
+    margin: auto;
+    font-size: 2vw;
+    padding: 2vw;
+    color: var(--body-text-color);
+    box-sizing: border-box;
+}
+
+.illustration-sign-up {
+    float: right;
+    width: 50%;
+}
+
+.illustration-sign-up--img {
+    width: 100%;
+}
+
+.sign-up--header-text {
+    margin-top: 0;
+    font-size: 3.5em;
+}
+
+.sign-up--form > button, input{
+    box-sizing: border-box;
+}
+
+.sign-up--form--input-field {
+    display: block;
+    width: 90%;
+    font-size: 1em;
+    padding: 1vw;
+    border-color: rgb(180, 180, 180);
+    border-style: solid
+}
+
+.sign-up--form--submit-button {
+    width: 90%;
+    font-size: 1em;
+    padding: 1vw;
+    color: white;
+    background-color: var(--body-text-color);
+}
+
+.sign-up--form--label {
+    font-weight: bold;
+    font-size: 0.75em;
+}
+
+.icon-list {
+    background: url(../assets/images/icon-list.svg);
+}
+
+.icon {
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    height: 3vw;
+    width: 3vw;
+}
+
+.mb-1 {
+    margin-bottom: 2vw;
+}
+
+.mr-1 {
+    margin-right: 2vw;
+}
+
+.curvy {
+    border-radius: 1vw;
+}

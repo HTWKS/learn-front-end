@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "css-minify": "^2.0.0"
+  },
+  "scripts": {
+    "build-css": "css-minify -d ./css -o ./css",
+    "build": "npm run build-css"
+  }
+}
