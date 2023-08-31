@@ -12,6 +12,7 @@
 body {
     font-family: 'Roboto';
     --body-text-color: rgb(31, 35, 57);
+    --gradient-button-horver: linear-gradient(to right, rgb(218,89,114) , rgb(232,112,173));
 }
 
 .attribution {
@@ -24,6 +25,7 @@ body {
 }
 
 .wrapper {
+    padding: 3vw;
     display: flex;
 }
 
@@ -51,7 +53,8 @@ body {
     font-size: 3.5em;
 }
 
-.sign-up--form > button, input{
+.sign-up--form>button,
+input {
     box-sizing: border-box;
 }
 
@@ -69,7 +72,13 @@ body {
     font-size: 1em;
     padding: 1vw;
     color: white;
-    background-color: var(--body-text-color);
+    background: var(--body-text-color);
+    border: none;
+    cursor: pointer;
+}
+
+.sign-up--form--submit-button:hover {
+    background: var(--gradient-button-horver)
 }
 
 .sign-up--form--label {

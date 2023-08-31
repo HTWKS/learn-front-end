@@ -1,8 +1,11 @@
 {
   "devDependencies": {
-    "css-minify": "^2.0.0"
+    "@testing-library/jest-dom": "^6.1.2",
+    "css-minify": "^2.0.0",
+    "jest": "^29.6.4"
   },
   "scripts": {
+    "test": "jest test",
     "build-css": "css-minify -d ./css -o ./css",
     "build": "npm run build-css"
   }
