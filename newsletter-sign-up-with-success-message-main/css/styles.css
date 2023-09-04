@@ -11,8 +11,12 @@
 
 body {
     font-family: 'Roboto';
-    --body-text-color: rgb(31, 35, 57);
-    --gradient-button-horver: linear-gradient(to right, rgb(218,89,114) , rgb(232,112,173));
+    --tomato: hsl(4, 100%, 67%);
+    --dark-slate-grey: hsl(234, 29%, 20%);
+    --charcoal-grey: hsl(235, 18%, 26%);
+    --grey: hsl(231, 7%, 60%);
+    --white: white;
+    --text-size: 16px;
 }
 
 .attribution {
@@ -33,9 +37,9 @@ body {
     float: left;
     width: 50%;
     margin: auto;
-    font-size: 2vw;
+    font-size: var(--text-size);
     padding: 2vw;
-    color: var(--body-text-color);
+    color: var(--charcoal-grey);
     box-sizing: border-box;
 }
 
@@ -62,23 +66,23 @@ input {
     display: block;
     width: 90%;
     font-size: 1em;
-    padding: 1vw;
-    border-color: rgb(180, 180, 180);
+    padding: var(--text-size);
+    border-color: var(--grey);
     border-style: solid
 }
 
 .sign-up--form--submit-button {
     width: 90%;
     font-size: 1em;
-    padding: 1vw;
-    color: white;
-    background: var(--body-text-color);
+    padding: var(--text-size);
+    color: var(--white);
+    background: var(--dark-slate-grey);
     border: none;
     cursor: pointer;
 }
 
 .sign-up--form--submit-button:hover {
-    background: var(--gradient-button-horver)
+    background: var(--tomato)
 }
 
 .sign-up--form--label {
@@ -94,16 +98,16 @@ input {
     background-repeat: no-repeat;
     background-size: cover;
     display: inline-block;
-    height: 3vw;
-    width: 3vw;
+    height: calc(2*var(--text-size));
+    width: calc(2*var(--text-size));
 }
 
 .mb-1 {
-    margin-bottom: 2vw;
+    margin-bottom: var(--text-size);
 }
 
 .mr-1 {
-    margin-right: 2vw;
+    margin-right: var(--text-size);
 }
 
 .curvy {
