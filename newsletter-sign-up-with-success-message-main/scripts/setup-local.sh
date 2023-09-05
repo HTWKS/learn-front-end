@@ -13,10 +13,6 @@ success () {
 }
 
 step "Setup the web"
-npm install
-npm audit fix
-
-step "Setup the web"
 pushd ${BASEDIR}/../src
 npm install
 npm audit fix
