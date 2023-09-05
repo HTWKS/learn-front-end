@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  web:
+    container_name: web
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+    - "8080:8080"
+  e2e:
+    container_name: e2e
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    environment:
+      - CYPRESS_WEB_HOST=http://web:8080
+    depends_on: ["web"]
+    entrypoint: ["./scripts/wait-for-it.sh", "-s", "web:8080", "--", "./scripts/entrypoint.sh"]
+
+networks:
+  default:
+    name: newsletter-sign-up-networks

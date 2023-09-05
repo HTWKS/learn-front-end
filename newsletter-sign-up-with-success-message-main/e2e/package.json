@@ -3,6 +3,10 @@
     "cypress": "^13.1.0"
   },
   "scripts": {
-    "test": "cypress run"
+    "test": "CYPRESS_WEB_HOST=http://localhost:8080 cypress run",
+    "cy:test": "cypress run"
+  },
+  "dependencies": {
+    "typescript": "^5.2.2"
   }
 }
