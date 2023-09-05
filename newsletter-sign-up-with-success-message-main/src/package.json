@@ -13,7 +13,7 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "build-html": "html-minifier-terser index.src.html --collapse-whitespace --remove-comments -o index.html",
+    "build-html": "html-minifier-terser  --input-dir html --collapse-whitespace --remove-comments --output-dir .",
     "build-css": "css-minify -d css -o css",
     "build": "npm run build-html & npm run build-css",
     "serve": "npm run build && http-server .",
