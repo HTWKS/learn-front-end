@@ -9,18 +9,6 @@
     font-weight: bold;
 }
 
-@media only screen and (max-width: 375px) {
-
-    .illustration-sign-up {
-        width: 100%;
-        float: none;
-    }
-
-    .sign-up {
-        width: 100%;
-        float: none;
-    }
-}
 
 body {
     font-family: 'Roboto';
@@ -44,12 +32,14 @@ body {
 
 .wrapper {
     padding: 3vw;
-    display: inline-block;
     width: 100%;
 }
 
+.display-flex {
+    display: flex;
+}
+
 .sign-up {
-    float: left;
     width: 50%;
     margin: auto;
     font-size: var(--text-size);
@@ -60,11 +50,24 @@ body {
 
 .illustration-sign-up {
     width: 50%;
-    float: right;
 }
 
-.illustration-sign-up--img {
-    width: 100%;
+.illustration-sign-up-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 375px) {
+    .sign-up {
+        width: 100%;
+    }
+
+    .illustration-sign-up {
+        width: 0%;
+    }
+
+    .illustration-sign-up-mobile {
+        display: block;
+    }
 }
 
 .sign-up--header-text {
@@ -120,6 +123,10 @@ input {
 .sign-up--form--label {
     font-weight: bold;
     font-size: 0.75em;
+}
+
+.illustration-sign-up--img {
+    width: 100%;
 }
 
 .float {
