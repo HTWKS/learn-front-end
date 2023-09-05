@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <title>Frontend Mentor | Newsletter sign-up form with success message</title>
-  <link rel="stylesheet" href="./css/styles.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
@@ -25,13 +25,13 @@
           </div>
           <div class="mb-1"><i class="icon icon-list mr-1"></i><span>And much more!</span></div>
         </div>
-        <form class="sign-up--form" id="sign-up--form">
+        <form action="" class="sign-up--form" id="sign-up--form">
           <label for="sign-up--form--email-address" class="sign-up--form--label float float-left mb-1">Email
             address</label>
           <label for="sign-up--form--email-address" class="sign-up--form--label float float-right invalid">Valid email
             required</label>
-          <input id="sign-up--form--email-address" class="sign-up--form--input-field curvy mb-1" type="email"
-            placeholder="email@company.com"></input>
+          <input name="email-address" id="sign-up--form--email-address" class="sign-up--form--input-field curvy mb-1"
+            type="email" placeholder="email@company.com"></input>
           <button class="sign-up--form--submit-button curvy">Subscribe to monthly newsletter</button>
         </form>
       </div>
@@ -40,7 +40,6 @@
       </div>
     </div>
   </div>
-  <!-- Success message end -->
   <div class="attribution">
     Challenged by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
     Coded by <a href="https://github.com/HTWKS">Hung Duong</a>.
