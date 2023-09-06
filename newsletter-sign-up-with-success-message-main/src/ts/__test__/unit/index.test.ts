@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach } from '@jest/globals';
 import { SignUpFormSnapShot } from '../sign-up-form-snapshot';
 import { HttpStatusCode } from '../../http-status-code';
 import 'isomorphic-fetch'
-import { getSignUpFormAsync, setToBody } from '../../get-sign-up-form';
+import { getSignUpFormAsync, getRootElement, setToBody } from '../../get-sign-up-form';
 
 describe("Sign up form", () => {
 
@@ -32,12 +32,45 @@ describe("Sign up form", () => {
     })
 
     it("Should assign sign up form to body successfully", () => {
+        // Arrange
+        const signUpFormDom = getSignUpFormDom();
+        // Act
         setToBody(document, SignUpFormSnapShot)
-        const parser = new DOMParser()
-        const signUpFormDom = parser.parseFromString(SignUpFormSnapShot, 'text/html');
-        (signUpFormDom.body.firstChild as HTMLElement).id = 'sign-up-form'
+        // Assert
         expect(document.body).toEqual(signUpFormDom.body);
         expect('sign-up-form').toEqual((document.body.firstChild as HTMLDivElement).id);
+    })
+
+    it("Should get submit form successfully", () => {
+        // Act
+        setToBody(document, SignUpFormSnapShot)
+        // Assert
+        expect(getRootElement(document)).toEqual(getSignUpFormDom().body.firstChild)
+    })
+
+    it("Should submit form on button click", () => {
+        //Arrange
+        setToBody(document, SignUpFormSnapShot)
+        const submitForm = getRootElement(document)
+        let formSubmitted = false
+        // Act
+        submitForm.addEventListener("submit", () => { formSubmitted = true })
+        submitForm.getElementsByTagName("input")[0].value = 'hung@gmail.com'
+        submitForm.getElementsByTagName("button")[0].click()
+        // Assert
+        expect(formSubmitted).toBeTruthy()
+    })
+
+    it("Should validate form on submit", () => {
+        //Arrange
+        setToBody(document, SignUpFormSnapShot)
+        const submitForm = getRootElement(document)
+        let formSubmitted = false
+        // Act
+        submitForm.addEventListener("submit", () => { formSubmitted = true })
+        submitForm.getElementsByTagName("button")[0].click()
+        // Assert
+        expect(formSubmitted).toBeFalsy()
     })
 
     function getFetchMock() {
@@ -50,11 +83,20 @@ describe("Sign up form", () => {
             return Promise.resolve(BadResponse);
         };
     }
+
     function getNotFoundFetchMock() {
         return () => {
             const BadResponse = new Response("Not Good", { status: HttpStatusCode.NOT_FOUND });
             return Promise.resolve(BadResponse);
         };
     }
+
+    function getSignUpFormDom() {
+        const parser = new DOMParser();
+        const signUpFormDom = parser.parseFromString(SignUpFormSnapShot, 'text/html');
+        (signUpFormDom.body.firstChild as HTMLElement).id = 'sign-up-form';
+        return signUpFormDom;
+    }
 })
+
 

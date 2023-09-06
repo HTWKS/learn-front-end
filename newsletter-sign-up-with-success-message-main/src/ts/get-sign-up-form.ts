@@ -14,3 +14,7 @@ export function setToBody(document: Document, Html: string) {
     document.body.innerHTML = Html;
     (document.body.firstChild as HTMLElement).id = ROOT_ID
 }
+
+export function getRootElement(document: Document): HTMLElement {
+    return document.getElementById(ROOT_ID);
+}
