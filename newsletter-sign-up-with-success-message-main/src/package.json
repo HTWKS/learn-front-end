@@ -20,7 +20,8 @@
   "scripts": {
     "build-html": "html-minifier-terser  --input-dir html --collapse-whitespace --remove-comments --output-dir .",
     "build-css": "css-minify -d css -o css",
-    "build": "npm run build-html & npm run build-css & webpack",
+    "build-ts": "webpack",
+    "build": "npm run build-html & npm run build-css & npm run build-ts",
     "serve": "npm run build && http-server .",
     "test": "jest"
   },

@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import { describe, it, expect, beforeEach } from '@jest/globals';
-import { SignUpFormSnapShot } from './sign-up-form-snapshot';
-import { HttpStatusCode } from '../http-status-code';
+import { SignUpFormSnapShot } from '../sign-up-form-snapshot';
+import { HttpStatusCode } from '../../http-status-code';
 import 'isomorphic-fetch'
-import { getSignUpFormAsync, setToBody } from '../get-sign-up-form';
+import { getSignUpFormAsync, setToBody } from '../../get-sign-up-form';
 
 describe("Sign up form", () => {
 
