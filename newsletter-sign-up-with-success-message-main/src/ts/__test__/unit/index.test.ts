@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import { describe, it, expect, beforeEach } from '@jest/globals';
-import { SignUpFormSnapShot } from '../sign-up-form-snapshot';
+import { SignUpFormSnapShot, SuccessFormSnapShot } from '../snapshots';
 import { HttpStatusCode } from '../../http-status-code';
 import 'isomorphic-fetch'
-import { getSignUpFormAsync, getRootElement, setToBody } from '../../get-sign-up-form';
+import { getSignUpFormAsync, getRootElement, setToBody, ROOT_ID } from '../../get-sign-up-form';
 
 describe("Sign up form", () => {
 
@@ -73,6 +73,17 @@ describe("Sign up form", () => {
         expect(formSubmitted).toBeFalsy()
     })
 
+    it("Should update to success view on submit", () => {
+        // Arrange
+        setToBody(document, SignUpFormSnapShot)
+        const rootElement = getRootElement(document)
+        // Act
+        rootElement.getElementsByTagName("input")[0].value = 'hung@gmail.com'
+        rootElement.getElementsByTagName("button")[0].click()
+        // Assert
+        expect(rootElement).toEqual(getSuccessFormDom().body.firstChild)
+    })
+
     function getFetchMock() {
         return (input: RequestInfo | URL) => {
             if (input == 'sign-up-form.html') {
@@ -94,8 +105,15 @@ describe("Sign up form", () => {
     function getSignUpFormDom() {
         const parser = new DOMParser();
         const signUpFormDom = parser.parseFromString(SignUpFormSnapShot, 'text/html');
-        (signUpFormDom.body.firstChild as HTMLElement).id = 'sign-up-form';
+        (signUpFormDom.body.firstChild as HTMLElement).id = ROOT_ID;
         return signUpFormDom;
+    }
+
+    function getSuccessFormDom() {
+        const parser = new DOMParser();
+        const successFormDom = parser.parseFromString(SuccessFormSnapShot, 'text/html');
+        (successFormDom.body.firstChild as HTMLElement).id = ROOT_ID;
+        return successFormDom;
     }
 })
 
