@@ -42,12 +42,37 @@ body {
     background: url(../assets/images/icon-list.svg);
 }
 
+.icon-success {
+    background: url(../assets/images/icon-success.svg);
+}
+
 .icon {
     background-repeat: no-repeat;
     background-size: cover;
     display: inline-block;
+}
+
+.icon-lg {
+    height: calc(8*var(--text-size));
+    width: calc(8*var(--text-size));
+}
+
+.icon-sm {
     height: calc(2*var(--text-size));
     width: calc(2*var(--text-size));
+}
+
+.button {
+    padding: var(--text-size);
+    color: var(--white);
+    background: var(--dark-slate-grey);
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.button:hover {
+    background: var(--tomato)
 }
 
 .mb-1 {

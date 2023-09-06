@@ -1,0 +1,12 @@
+.success--wrapper {
+    width: 400px;
+    margin: auto
+}
+
+.success--header-text {
+    font-size: 3.5em;
+}
+
+.success--button {
+    width: 100%;
+}

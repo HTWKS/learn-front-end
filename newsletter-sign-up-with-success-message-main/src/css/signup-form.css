@@ -7,9 +7,9 @@
     color: hsl(228, 45%, 44%);
 }
 
-.wrapper {
-    padding: 3vw;
+.sign-up--wrapper {
     width: 100%;
+    padding: 3vw;
 }
 
 .display-flex {
@@ -85,16 +85,6 @@ input {
 
 .sign-up--form--submit-button {
     width: 100%;
-    font-size: 1em;
-    padding: var(--text-size);
-    color: var(--white);
-    background: var(--dark-slate-grey);
-    border: none;
-    cursor: pointer;
-}
-
-.sign-up--form--submit-button:hover {
-    background: var(--tomato)
 }
 
 .sign-up--form--label {
