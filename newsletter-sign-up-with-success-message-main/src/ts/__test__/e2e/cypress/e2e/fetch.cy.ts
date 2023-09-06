@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "../../../../http-status-code";
 import { SignUpFormSnapShot } from "../../../sign-up-form-snapshot";
+import { ROOT_ID } from "../../../../get-sign-up-form";
 
 const cypressHost = Cypress.env('WEB_HOST');
 
@@ -13,6 +14,7 @@ describe('Get sign up form', () => {
 
   it('Should see sign up form on first visit', () => {
     cy.visit(cypressHost)
-    cy.get('#sign-up-form').should('be.visible')
+    cy.get('#' + ROOT_ID).should('be.visible')
+    cy.get('#' + ROOT_ID).contains('Stay Updated!')
   })
 })
