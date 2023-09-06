@@ -1,6 +1,8 @@
 {
   "include": [
     "node_modules/cypress",
-    "cypress/*/*.ts"
+    "cypress/*/*.ts",
+    "../http-status-code.ts",
+    "../sign-up-form-snapshot.ts"
   ]
 }

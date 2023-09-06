@@ -1,5 +1,5 @@
-import { HttpStatusCode } from "./http-status-code";
-import { SignUpFormSnapShot } from "./sign-up-form-snapshot";
+import { HttpStatusCode } from "../../../../http-status-code";
+import { SignUpFormSnapShot } from "../../../sign-up-form-snapshot";
 
 const cypressHost = Cypress.env('WEB_HOST');
 
