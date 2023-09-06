@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "../../../../http-status-code";
 import { GlobalCSSSnapShot, SignUpFormCSSSnapShot, SignUpFormSnapShot, SuccessFormCSSSnapShot } from "../../../snapshots";
-import { ROOT_ID } from "../../../../get-sign-up-form";
+import { ROOT_ID } from "../../../../sign-up-form";
 
 const cypressHost = Cypress.env('WEB_HOST');
 
