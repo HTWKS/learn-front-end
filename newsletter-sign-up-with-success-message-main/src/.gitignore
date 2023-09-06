@@ -15,7 +15,6 @@
 .DS_Store
 .prettierignore
 
-dist
+out
 node_modules
 coverage
-/*.html
