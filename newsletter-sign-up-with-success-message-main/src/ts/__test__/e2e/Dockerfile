@@ -4,6 +4,6 @@ WORKDIR /e2e
 
 COPY . .
 WORKDIR /e2e/__test__/e2e
-RUN npm install
+RUN CYPRESS_CACHE_FOLDER=./tmp/Cypress npm install
 
 ENTRYPOINT ["./scripts/entrypoint.sh"]
