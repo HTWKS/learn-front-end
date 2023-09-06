@@ -10,7 +10,9 @@ describe('Get sign up form', () => {
       expect(response.body).equal(SignUpFormSnapShot)
     });
   })
-  it('Should see sign up form on first view', () => {
+
+  it('Should see sign up form on first visit', () => {
     cy.visit(cypressHost)
+    cy.get('#sign-up-form').should('be.visible')
   })
 })

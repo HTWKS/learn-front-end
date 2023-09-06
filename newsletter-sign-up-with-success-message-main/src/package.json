@@ -12,12 +12,15 @@
     "isomorphic-fetch": "^3.0.0",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4",
-    "ts-node": "^10.9.1"
+    "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
     "build-html": "html-minifier-terser  --input-dir html --collapse-whitespace --remove-comments --output-dir .",
     "build-css": "css-minify -d css -o css",
-    "build": "npm run build-html & npm run build-css",
+    "build": "npm run build-html & npm run build-css & webpack",
     "serve": "npm run build && http-server .",
     "test": "jest"
   },
