@@ -1,3 +1,4 @@
 node_modules
 coverage
+ts/__test__/e2e
 .gitignore

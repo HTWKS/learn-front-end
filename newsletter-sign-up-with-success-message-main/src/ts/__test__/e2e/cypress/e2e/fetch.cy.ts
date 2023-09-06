@@ -10,4 +10,7 @@ describe('Get sign up form', () => {
       expect(response.body).equal(SignUpFormSnapShot)
     });
   })
+  it('Should see sign up form on first view', () => {
+    cy.visit(cypressHost)
+  })
 })

@@ -10,8 +10,8 @@ services:
   e2e:
     container_name: e2e
     build:
-      context: ./src/ts/__test__/e2e
-      dockerfile: Dockerfile
+      context: ./src/ts
+      dockerfile: __test__/e2e/Dockerfile
     environment:
       - CYPRESS_WEB_HOST=http://web:8080
     depends_on: ["web"]
