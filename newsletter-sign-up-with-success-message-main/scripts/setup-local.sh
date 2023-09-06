@@ -19,7 +19,7 @@ npm audit fix
 popd
 
 step "Setup E2E"
-pushd ${BASEDIR}/../e2e
+pushd ${BASEDIR}/../src/ts/__test__/e2e
 npm install
 npm audit fix
 popd
