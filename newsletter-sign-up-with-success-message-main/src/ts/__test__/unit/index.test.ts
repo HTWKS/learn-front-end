@@ -105,17 +105,17 @@ describe("Sign up form", () => {
         expect(formSubmitted).toBeFalsy()
     })
 
-    // it("Should update to success view on submit", () => {
-    //     // Arrange
-    //     setRootElement(document, SignUpFormSnapShot)
-    //     const rootElement = getRootElement(document)
-    //     wireUpSignUpFormSubmitEvent(document, rootElement, getSignUpFormFetchMock())
-    //     // Act
-    //     rootElement.getElementsByTagName("input")[0].value = 'hung@gmail.com'
-    //     rootElement.getElementsByTagName("button")[0].click()
-    //     // Assert
-    //     expect(getRootElement(document)).toEqual(getSuccessFormDom().body.firstChild)
-    // })
+    it("Should update to success view on submit", async () => {
+        // Arrange
+        setRootElement(document, SignUpFormSnapShot)
+        const rootElement = getRootElement(document)
+        wireUpSignUpFormSubmitEvent(document, rootElement, await getSuccessFormAsync(getSuccessFormFetchMock()))
+        // Act
+        rootElement.getElementsByTagName("input")[0].value = 'hung@gmail.com'
+        rootElement.getElementsByTagName("button")[0].click()
+        // Assert
+        expect(getRootElement(document)).toEqual(getSuccessFormDom().body.firstChild)
+    })
 
     function getFetchMock(snapShot: string, requestInfo: string) {
         return (input: RequestInfo | URL) => {

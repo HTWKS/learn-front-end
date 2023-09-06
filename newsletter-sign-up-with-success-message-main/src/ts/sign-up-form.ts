@@ -31,10 +31,10 @@ export function setRootElement(document: Document, html: string) {
     rootElement.id = ROOT_ID
 }
 
-export function wireUpSignUpFormSubmitEvent(document: Document, rootElement: HTMLElement, fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>) {
+export function wireUpSignUpFormSubmitEvent(document: Document, rootElement: HTMLElement, newRootHtml: string) {
     const formElement = rootElement.getElementsByTagName("form")[0];
-    formElement.addEventListener("submit", async () => {
-        setRootElement(document, await getSuccessFormAsync(fetch))
+    formElement.addEventListener("submit", () => {
+        setRootElement(document, newRootHtml)
     });
 }
 
@@ -43,9 +43,13 @@ export function getRootElement(document: Document): HTMLElement {
 }
 
 export function initialize() {
-    getSignUpFormAsync(fetch).then((response) => {
-        setRootElement(document, response)
-    })
+    getSignUpFormAsync(fetch)
+        .then((signUpForm) => {
+            setRootElement(document, signUpForm)
+            getSuccessFormAsync(fetch).then((successForm) => {
+                wireUpSignUpFormSubmitEvent(document, getRootElement(document), successForm)
+            })
+        })
 }
 
 export function removeCaches() {
