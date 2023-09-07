@@ -38,8 +38,17 @@ export function wireUpSignUpFormSubmitEvent(document: Document, signUpFormElemen
     formElement.addEventListener("submit", (event) => {
         signUpFormElementSubmitEventHandler(event)
         setBody(document, newRootHtml, SUCCESS_ID)
-        wireUpSuccessClickEvent(document, document.getElementById(SUCCESS_ID), signUpForm)
+        const successElement = document.getElementById(SUCCESS_ID)
+        setSuccessElementEmailText(successElement, event);
+        wireUpSuccessClickEvent(document, successElement, signUpForm)
     });
+}
+
+function setSuccessElementEmailText(successElement: HTMLElement, event: SubmitEvent) {
+    const successFormEmail = successElement.querySelector('span[name="sign-up-form--email"]') as HTMLSpanElement;
+    const formElements = (event.target as HTMLFormElement).elements;
+    const submittedEmailAddress = formElements.namedItem('email-address') as HTMLInputElement;
+    successFormEmail.textContent = submittedEmailAddress.value;
 }
 
 export function signUpFormElementSubmitEventHandler(event: { preventDefault(): void }) {

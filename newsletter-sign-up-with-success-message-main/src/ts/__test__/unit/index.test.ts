@@ -114,7 +114,7 @@ describe("Sign up form", () => {
         signUpElement.getElementsByTagName("input")[0].value = 'hung@gmail.com'
         signUpElement.getElementsByTagName("button")[0].click()
         // Assert
-        expect(document.getElementById(SUCCESS_ID)).toEqual(getSuccessFormDom().body.firstChild)
+        expect(document.getElementById(SUCCESS_ID)).toBeTruthy()
     })
 
     it("Should comeback to submit view on returning", () => {
@@ -140,6 +140,21 @@ describe("Sign up form", () => {
         const successForm = document.getElementById(SUCCESS_ID) as HTMLElement
         successForm.getElementsByTagName("button")[0].click()
         expect(document.getElementById(SIGNUP_ID)).toBeTruthy()
+    })
+
+    it("Should bring submitted email over to success view", async () => {
+        initialize(getAllFormFetchMock())
+        await new Promise(process.nextTick);
+        const submitForm = document.getElementById(SIGNUP_ID) as HTMLFormElement
+        const expectedEmail = 'hung@gmail.com'
+        submitForm.getElementsByTagName("input")[0].value = expectedEmail
+        submitForm.getElementsByTagName("button")[0].click()
+
+        expect(document.getElementById(SUCCESS_ID)).toBeTruthy()
+        const successForm = document.getElementById(SUCCESS_ID) as HTMLElement
+        expect(successForm.querySelector('span[name="sign-up-form--email"]')).toBeTruthy()
+        const successFormEmail = successForm.querySelector('span[name="sign-up-form--email"]') as HTMLSpanElement
+        expect(successFormEmail.textContent).toBe(expectedEmail)
     })
 
     it("Should prevent default event from happening", () => {
