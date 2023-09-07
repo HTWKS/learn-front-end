@@ -11,16 +11,20 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+
+      - name: Install npm
+        working-directory: ./newsletter-sign-up-with-success-message-main
+        run: npm install
+
       - name: Run all test for newsletter-sign-up-with-success-message
         working-directory: ./newsletter-sign-up-with-success-message-main
         run: ./scripts/run-all-local-tests.sh
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-
-      - name: Install and Build project
+      - name: Build project
         working-directory: ./newsletter-sign-up-with-success-message-main/src
-        run: npm install && npm run-script build
+        run: npm run-script build
 
       - name: Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
