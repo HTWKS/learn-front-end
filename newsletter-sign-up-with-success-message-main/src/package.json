@@ -22,7 +22,7 @@
     "build-css": "css-minify -d css -o out/css",
     "build-ts": "webpack",
     "build-static": "rm -f -r out/assets && mkdir out/assets && cp -r assets out",
-    "build": "npm run build-html & npm run build-css & npm run build-ts & npm run build-static",
+    "build": "npm run build-html && npm run build-css && npm run build-ts && npm run build-static",
     "serve": "npm run build && http-server out",
     "test": "jest"
   },
