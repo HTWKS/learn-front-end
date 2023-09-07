@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach } from '@jest/globals';
 import { SignUpFormSnapShot, SuccessFormSnapShot } from '../snapshots';
 import { HttpStatusCode } from '../../http-status-code';
 import 'isomorphic-fetch'
-import { getSignUpFormAsync, setBody, getSuccessFormAsync, removeCaches, wireUpSignUpFormSubmitEvent, SIGNUP_ID, SUCCESS_ID, wireUpSuccessClickEvent, initialize, signUpFormElementSubmitEventHandler } from '../../sign-up-form';
+import { getSignUpFormAsync, setBody, getSuccessFormAsync, removeCaches, wireUpSignUpFormSubmitEvent, SIGNUP_ID, SUCCESS_ID, wireUpSuccessClickEvent, initialize, preventDefault } from '../../sign-up-form';
 
 describe("Sign up form", () => {
 
@@ -140,6 +140,12 @@ describe("Sign up form", () => {
         const successForm = document.getElementById(SUCCESS_ID) as HTMLElement
         successForm.getElementsByTagName("button")[0].click()
         expect(document.getElementById(SIGNUP_ID)).toBeTruthy()
+
+        const submitForm2 = document.getElementById(SIGNUP_ID) as HTMLFormElement
+
+        submitForm2.getElementsByTagName("input")[0].value = 'hung@gmail.com'
+        submitForm2.getElementsByTagName("button")[0].click()
+        expect(document.getElementById(SUCCESS_ID)).toBeTruthy()
     })
 
     it("Should bring submitted email over to success view", async () => {
@@ -162,7 +168,7 @@ describe("Sign up form", () => {
         const submitEvent = {
             preventDefault: () => { prevented = true }
         }
-        signUpFormElementSubmitEventHandler(submitEvent)
+        preventDefault(submitEvent)
         expect(prevented).toBeTruthy()
     })
 
