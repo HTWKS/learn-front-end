@@ -1,7 +1,8 @@
 import { HttpStatusCode } from "./http-status-code";
 let successForm: string;
 let signUpForm: string;
-export const ROOT_ID = 'root';
+export const SIGNUP_ID = 'sign-up-form'
+export const SUCCESS_ID = 'success-form'
 
 export async function getSignUpFormAsync(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
     if (signUpForm === undefined) {
@@ -18,6 +19,7 @@ export async function getSuccessFormAsync(fetch: (input: RequestInfo | URL, init
     }
     return successForm
 }
+
 async function processApiResponse(response: Response) {
     if (response.status == HttpStatusCode.OK) {
         return await response.text();
@@ -25,29 +27,38 @@ async function processApiResponse(response: Response) {
     return ''
 }
 
-export function setRootElement(document: Document, html: string) {
+export function setBody(document: Document, html: string, id: string) {
     document.body.innerHTML = html;
     const rootElement: HTMLElement = document.body.firstChild as HTMLElement
-    rootElement.id = ROOT_ID
+    rootElement.id = id
 }
 
-export function wireUpSignUpFormSubmitEvent(document: Document, rootElement: HTMLElement, newRootHtml: string) {
-    const formElement = rootElement.getElementsByTagName("form")[0];
-    formElement.addEventListener("submit", () => {
-        setRootElement(document, newRootHtml)
+export function wireUpSignUpFormSubmitEvent(document: Document, signUpFormElement: HTMLElement, newRootHtml: string) {
+    const formElement = signUpFormElement.getElementsByTagName("form")[0];
+    formElement.addEventListener("submit", (event) => {
+        signUpFormElementSubmitEventHandler(event)
+        setBody(document, newRootHtml, SUCCESS_ID)
+        wireUpSuccessClickEvent(document, document.getElementById(SUCCESS_ID), signUpForm)
     });
 }
 
-export function getRootElement(document: Document): HTMLElement {
-    return document.getElementById(ROOT_ID);
+export function signUpFormElementSubmitEventHandler(event: { preventDefault(): void }) {
+    event.preventDefault()
 }
 
-export function initialize() {
+export function wireUpSuccessClickEvent(document: Document, successFormElement: HTMLElement, newRootHtml: string) {
+    const buttonElement = successFormElement.getElementsByTagName("button")[0];
+    buttonElement.addEventListener("click", () => {
+        setBody(document, newRootHtml, SIGNUP_ID)
+    });
+}
+
+export function initialize(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
     getSignUpFormAsync(fetch)
         .then((signUpForm) => {
-            setRootElement(document, signUpForm)
+            setBody(document, signUpForm, SIGNUP_ID)
             getSuccessFormAsync(fetch).then((successForm) => {
-                wireUpSignUpFormSubmitEvent(document, getRootElement(document), successForm)
+                wireUpSignUpFormSubmitEvent(document, document.getElementById(SIGNUP_ID), successForm)
             })
         })
 }

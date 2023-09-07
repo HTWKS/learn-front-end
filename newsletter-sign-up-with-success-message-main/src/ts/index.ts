@@ -1,2 +1,2 @@
 import { initialize } from "./sign-up-form"
-initialize()
+initialize(fetch)

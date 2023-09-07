@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "../../../../http-status-code";
 import { GlobalCSSSnapShot, SignUpFormCSSSnapShot, SignUpFormSnapShot, SuccessFormCSSSnapShot } from "../../../snapshots";
-import { ROOT_ID } from "../../../../sign-up-form";
+import { SIGNUP_ID, SUCCESS_ID } from "../../../../sign-up-form";
 
 const cypressHost = Cypress.env('WEB_HOST');
 
@@ -31,7 +31,15 @@ describe('Get sign up form', () => {
 
   it('Should see sign up form on first visit', () => {
     cy.visit(cypressHost)
-    cy.get('#' + ROOT_ID).should('be.visible')
-    cy.get('#' + ROOT_ID).contains('Stay Updated!')
+    cy.get('#' + SIGNUP_ID).should('be.visible')
+    cy.get('#' + SIGNUP_ID).contains('Stay Updated!')
+  })
+
+
+  it('Should navigate to success form on submit', () => {
+    cy.visit(cypressHost)
+    cy.get('input').type('hung@gmail')
+    cy.get('button').click()
+    cy.get('#' + SUCCESS_ID).contains('Thanks for subscribing!')
   })
 })
