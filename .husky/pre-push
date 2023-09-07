@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-./newsletter-sign-up-with-success-message-main/scripts/run-all-local-tests.sh
+./newsletter-sign-up-with-success-message-main/scripts/run-all-tests.sh

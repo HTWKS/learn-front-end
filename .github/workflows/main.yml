@@ -20,7 +20,7 @@ jobs:
 
       - name: Run all test for newsletter-sign-up-with-success-message
         working-directory: ./newsletter-sign-up-with-success-message-main
-        run: ./scripts/run-all-local-tests.sh
+        run: ./scripts/run-all-tests.sh
 
       - name: Build project
         working-directory: ./newsletter-sign-up-with-success-message-main/src
