@@ -1,5 +1,5 @@
 import { HttpStatusCode } from "../../../../http-status-code";
-import { GlobalCSSSnapShot, SignUpFormCSSSnapShot, SignUpFormSnapShot, SuccessFormCSSSnapShot } from "../../../snapshots";
+import { GlobalCSSSnapShot, SignUpFormCSSSnapShot, SignUpFormSnapShot, SuccessFormCSSSnapShot, SuccessFormSnapShot } from "../../../snapshots";
 import { SIGNUP_ID, SUCCESS_ID } from "../../../../sign-up-form";
 
 const cypressHost = Cypress.env('WEB_HOST');
@@ -9,6 +9,13 @@ describe('Get sign up form', () => {
     cy.request("Get", cypressHost + '/sign-up-form.html').should((response) => {
       expect(response.status).equal(HttpStatusCode.OK)
       expect(response.body).equal(SignUpFormSnapShot)
+    });
+  })
+
+  it('Should get success form successfully', () => {
+    cy.request("Get", cypressHost + '/success-form.html').should((response) => {
+      expect(response.status).equal(HttpStatusCode.OK)
+      expect(response.body).equal(SuccessFormSnapShot)
     });
   })
 
