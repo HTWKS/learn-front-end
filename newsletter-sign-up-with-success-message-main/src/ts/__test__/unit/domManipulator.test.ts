@@ -2,87 +2,48 @@
  * @jest-environment jsdom
  */
 import { describe, it, expect, beforeEach } from '@jest/globals';
-import { SignUpFormSnapShot, SuccessFormSnapShot } from '../snapshots';
-import { HttpStatusCode } from '../../http-status-code';
+import { SignUpFormSnapShot, SuccessFormSnapShot, getSignUpFormDom, getSuccessFormDom } from '../snapshots';
+import { HttpStatusCode, SIGNUP_ID, SUCCESS_ID } from '../../constants';
+import { DomManipulator, initialize, preventDefault } from '../../domManipulator';
 import 'isomorphic-fetch'
-import { getSignUpFormAsync, setBody, getSuccessFormAsync, removeCaches, wireUpSignUpFormSubmitEvent, SIGNUP_ID, SUCCESS_ID, wireUpSuccessClickEvent, initialize, preventDefault } from '../../sign-up-form';
 
 describe("Sign up form", () => {
+    let sut: DomManipulator
 
     beforeEach(() => {
         document.body.innerHTML = ''
-        removeCaches()
+        sut = getSut(document)
     })
 
     it("Should run in jsdom environment", () => {
         expect(document).toBeTruthy()
     })
 
-    it("Should get sign up form successfully", async () => {
-        // Act
-        const actual = await getSignUpFormAsync(getSignUpFormFetchMock())
-        // Assert
-        expect(actual).toEqual(SignUpFormSnapShot)
-    })
-
-    it("Should cache sign up form", async () => {
-        // Act
-        await getSignUpFormAsync(getSignUpFormFetchMock())
-        const actual = await getSignUpFormAsync(getNotFoundFetchMock())
-        // Assert
-        expect(actual).toEqual(SignUpFormSnapShot)
-    })
-
-    it("Should handle api call fail gracefully", async () => {
-        // Act
-        const actual = await getSignUpFormAsync(getNotFoundFetchMock())
-        // Assert
-        expect(actual).toEqual('')
-    })
-
-    it("Should get success form successfully", async () => {
-        // Act
-        const actual = await getSuccessFormAsync(getSuccessFormFetchMock())
-        // Assert
-        expect(actual).toEqual(SuccessFormSnapShot)
-
-    })
-
-    it("Should cache success form", async () => {
-        // Act
-        await getSuccessFormAsync(getSuccessFormFetchMock())
-        const actual = await getSuccessFormAsync(getNotFoundFetchMock())
-        // Assert
-        expect(actual).toEqual(SuccessFormSnapShot)
-    })
-
     it("Should assign sign up form to body successfully", () => {
-        // Arrange
-        const signUpFormDom = getSignUpFormDom();
         // Act
-        setBody(document, SignUpFormSnapShot, SIGNUP_ID)
+        sut.setSignUpForm()
         // Assert
-        expect(document.body).toEqual(signUpFormDom.body);
+        expect(document.body).toEqual(getSignUpFormDom().body);
         expect(SIGNUP_ID).toEqual((document.body.firstChild as HTMLDivElement).id);
     })
 
     it("Should get submit form successfully", () => {
         // Act
-        setBody(document, SignUpFormSnapShot, SIGNUP_ID)
+        sut.setSignUpForm()
         // Assert
         expect(document.getElementById(SIGNUP_ID)).toEqual(getSignUpFormDom().body.firstChild)
     })
 
     it("Should get success form successfully", () => {
         // Act
-        setBody(document, SuccessFormSnapShot, SUCCESS_ID)
+        sut.setSuccessForm()
         // Assert
         expect(document.getElementById(SUCCESS_ID)).toEqual(getSuccessFormDom().body.firstChild)
     })
 
     it("Should submit form on button click", () => {
         //Arrange
-        setBody(document, SignUpFormSnapShot, SIGNUP_ID)
+        sut.setSignUpForm()
         const submitForm = document.getElementById(SIGNUP_ID) as HTMLFormElement
         let formSubmitted = false
         // Act
@@ -95,7 +56,7 @@ describe("Sign up form", () => {
 
     it("Should validate form on submit", () => {
         //Arrange
-        setBody(document, SignUpFormSnapShot, SIGNUP_ID)
+        sut.setSignUpForm()
         const submitForm = document.getElementById(SIGNUP_ID) as HTMLFormElement
         let formSubmitted = false
         // Act
@@ -107,9 +68,9 @@ describe("Sign up form", () => {
 
     it("Should update to success view on submit", async () => {
         // Arrange
-        setBody(document, SignUpFormSnapShot, SIGNUP_ID)
+        sut.setSignUpForm()
         const signUpElement = document.getElementById(SIGNUP_ID) as HTMLFormElement
-        wireUpSignUpFormSubmitEvent(document, signUpElement, SuccessFormSnapShot)
+        sut.wireUpSignUpFormSubmitEvent(signUpElement)
         // Act
         signUpElement.getElementsByTagName("input")[0].value = 'hung@gmail.com'
         signUpElement.getElementsByTagName("button")[0].click()
@@ -119,17 +80,17 @@ describe("Sign up form", () => {
 
     it("Should comeback to submit view on returning", () => {
         // Arrange
-        setBody(document, SuccessFormSnapShot, SUCCESS_ID)
-        const successElement = document.getElementById(SUCCESS_ID) as HTMLElement
-        wireUpSuccessClickEvent(document, successElement, SignUpFormSnapShot)
+        sut.setSuccessForm()
+        const successElementButton = document.getElementById(SUCCESS_ID)!.getElementsByTagName("button")[0]
+        sut.wireUpSuccessClickEvent(successElementButton)
         // Act
-        successElement.getElementsByTagName("button")[0].click()
+        successElementButton.click()
         // Assert
         expect(document.getElementById(SIGNUP_ID)).toEqual(getSignUpFormDom().body.firstChild)
     })
 
     it("Should navigate back and forth between views", async () => {
-        initialize(getAllFormFetchMock())
+        initialize(getAllFormFetchMock(), document)
         await new Promise(process.nextTick);
         const submitForm = document.getElementById(SIGNUP_ID) as HTMLFormElement
 
@@ -149,7 +110,7 @@ describe("Sign up form", () => {
     })
 
     it("Should bring submitted email over to success view", async () => {
-        initialize(getAllFormFetchMock())
+        initialize(getAllFormFetchMock(), document)
         await new Promise(process.nextTick);
         const submitForm = document.getElementById(SIGNUP_ID) as HTMLFormElement
         const expectedEmail = 'hung@gmail.com'
@@ -172,6 +133,11 @@ describe("Sign up form", () => {
         expect(prevented).toBeTruthy()
     })
 
+
+    function getSut(document: Document) {
+        return new DomManipulator({ signUp: SignUpFormSnapShot, success: SuccessFormSnapShot }, document);
+    }
+
     function getAllFormFetchMock() {
         return (input: RequestInfo | URL) => {
             if (input == 'success-form.html') {
@@ -185,46 +151,6 @@ describe("Sign up form", () => {
             const BadResponse = new Response("", { status: HttpStatusCode.NOT_FOUND });
             return Promise.resolve(BadResponse);
         };
-    }
-
-    function getFetchMock(snapShot: string, requestInfo: string) {
-        return (input: RequestInfo | URL) => {
-            if (input == requestInfo) {
-                const OkResponse = new Response(snapShot, { status: HttpStatusCode.OK });
-                return Promise.resolve(OkResponse);
-            }
-            const BadResponse = new Response("", { status: HttpStatusCode.NOT_FOUND });
-            return Promise.resolve(BadResponse);
-        };
-    }
-
-    function getSuccessFormFetchMock(): (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response> {
-        return getFetchMock(SuccessFormSnapShot, 'success-form.html');
-    }
-
-    function getSignUpFormFetchMock(): (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response> {
-        return getFetchMock(SignUpFormSnapShot, 'sign-up-form.html');
-    }
-
-    function getNotFoundFetchMock() {
-        return () => {
-            const BadResponse = new Response("Not Good", { status: HttpStatusCode.NOT_FOUND });
-            return Promise.resolve(BadResponse);
-        };
-    }
-
-    function getSignUpFormDom() {
-        const parser = new DOMParser();
-        const signUpFormDom = parser.parseFromString(SignUpFormSnapShot, 'text/html');
-        (signUpFormDom.body.firstChild as HTMLElement).id = SIGNUP_ID;
-        return signUpFormDom;
-    }
-
-    function getSuccessFormDom() {
-        const parser = new DOMParser();
-        const successFormDom = parser.parseFromString(SuccessFormSnapShot, 'text/html');
-        (successFormDom.body.firstChild as HTMLElement).id = SUCCESS_ID;
-        return successFormDom;
     }
 })
 

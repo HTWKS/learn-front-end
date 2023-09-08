@@ -1,2 +1,3 @@
-import { initialize } from "./sign-up-form"
-initialize(fetch)
+import { initialize } from "./domManipulator";
+
+initialize(fetch, document)
